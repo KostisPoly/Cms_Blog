@@ -1,0 +1,185 @@
+<div class="grid-x">
+    <div class="cell medium-9 text-center">
+        <div class="grid-x">
+            <div class="cell medium-4">
+                <h2 class="allPosts active">All Posts</h2>
+            </div>
+            <div class="cell medium-4">
+                <ion-icon id="toggleButton" name="repeat-outline" size="large"></ion-icon>
+            </div>
+            <div class="cell medium-4">
+                <h2 class="draftPosts">Draft Posts</h2>
+            </div>
+        </div>
+    </div>
+    <div class="cell medium-3">
+        <button class="button large" data-open="exampleModal1">Create Post</button>
+    </div>
+</div>
+
+<table class="hover" id="allPosts">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Image</th>
+            <th>Content</th>
+            <th>Comments</th>
+            <th>Tags</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+        <tr>
+            <td class="hide post_category">{{ post.post_category }}</td>
+            <td class="cat_title">{{ post.cat_title }}</td>
+            <td class="post_title">{{ post.post_title }}</td>
+            <td class="post_author">{{ post.post_author }}</td>
+            <td class="post_date">{{ post.post_date }}</td>
+            <td class="post_image">{{ post.post_image }}</td>
+            <td class="post_content">{{ post.post_content }}</td>
+            <td class="post_comments">{{ post.count_comments }}</td>
+            <td class="post_tags">{{ post.post_tags }}</td>
+            <td class="post_status">{{ post.post_status }}</td>
+            <td id="post{{ post.post_id }}"><ion-icon size="large" class="actionIcon" name="create-outline"></ion-icon></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<table class="hover hide" id="draftPosts">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Image</th>
+            <th>Content</th>
+            <th>Comments</th>
+            <th>Tags</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for draftpost in draftposts %}
+        <tr>
+            <td class="hide post_category">{{ draftpost.post_category }}</td>
+            <td class="cat_title">{{ draftpost.cat_title }}</td>
+            <td class="post_title">{{ draftpost.post_title }}</td>
+            <td class="post_author">{{ draftpost.post_author }}</td>
+            <td class="post_date">{{ draftpost.post_date }}</td>
+            <td class="post_image">{{ draftpost.post_image }}</td>
+            <td class="post_content">{{ draftpost.post_content }}</td>
+            <td class="post_comments">{{ draftpost.count_comments }}</td>
+            <td class="post_tags">{{ draftpost.post_tags }}</td>
+            <td class="post_status">{{ draftpost.post_status }}</td>
+            <td id="post{{draftpost.post_id}}"><ion-icon size="large" class="actionIcon" name="create-outline"></ion-icon></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- CREATE MODAL -->
+<div class="reveal" id="exampleModal1" data-reveal>
+    <h1>Create new Post</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="grid-y">
+            <div class="cell small-12 text-center">
+                <span class="label" id="titleLabel">Post Title</span>
+                <input type="title" name="title" placeholder="Post Title" aria-describedby="titleLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="contentLabel">Post Content</span>
+                <textarea name="content" id="content" cols="10" rows="5" aria-describedby="contentLabel"></textarea>
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="tagsLabel">Tags for the post</span>
+                <input type="tags" name="tags" placeholder="Tags comma separated e.g. tag1, tag2," aria-describedby="tagsLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="categoryLabel">Post Category</span>
+                <select name="category" id="category">
+                    <option value="0">No post category</option>
+                    {% for category in categories %}    
+                    <option value={{category.cat_id}}>{{category.cat_title}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="cell">
+                <label for="createImage" class="button">Upload Image</label>
+                <input type="file" id="createImage" class="show-for-sr" name="image">
+            </div>
+        </div>
+        
+        <input id="create" name="create" type="hidden" value="create">
+        <button class="button large expanded" type="submit" name="submit">Create</button>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </form>
+    
+    
+</div>
+
+<!-- EDIT MODAL -->
+<div class="reveal" id="exampleModal2" data-reveal>
+    <h1>Edit Post</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="grid-y">
+            <div class="cell small-12 text-center">
+                <span class="label" id="titleLabel">Post Title</span>
+                <input type="title" name="title" placeholder="Post Title" aria-describedby="titleLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="contentLabel">Post Content</span>
+                <textarea name="content" id="content" cols="10" rows="5" aria-describedby="contentLabel"></textarea>
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="tagsLabel">Tags for the post</span>
+                <input type="tags" name="tags" placeholder="Tags comma separated e.g. tag1, tag2," aria-describedby="tagsLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="authorLabel">Post author</span>
+                <input type="author" name="author" placeholder="The post author" aria-describedby="authorLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="dateLabel">Post date</span>
+                <input type="text" id="datepicker" name="date" placeholder="" aria-describedby="dateLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="categoryLabel">Post Category</span>
+                <select name="category" id="category">
+                    <option value="0">No post category</option>
+                    {% for category in categories %}    
+                    <option value={{category.cat_id}}>{{category.cat_title}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="cell">
+                <span class="label" id="statusLabel">Post Status</span>
+                <select name="status" id="status">
+                    <option value="draft">draft</option>
+                    <option value="active">active</option>
+                    <option value="archived">archived</option>
+                </select>
+            </div>
+            <div class="cell">
+                <label for="editImage" class="button">Upload Image</label>
+                <input type="file" id="editImage" class="show-for-sr" name="image">
+            </div>
+        </div>
+        
+        <input id="edit" name="edit" type="hidden" value="edit">
+        <button class="button large expanded" type="submit" name="submit">Create</button>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </form>
+    
+    
+</div>

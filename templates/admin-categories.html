@@ -1,0 +1,91 @@
+<div class="grid-x">
+    <div class="cell medium-6 text-center">
+        <h2>Current categories</h2>
+    </div>
+    {% if isadmin > 0 %}
+    <div class="cell medium-6">
+        <button class="button large" data-open="exampleModal1">Add Category</button>
+    </div>
+    {% endif %}
+</div>
+
+<table class="hover">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Parent Category</th>
+            {% if isadmin > 0 %}
+            <th>Actions</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td class="cat_title">{{category.cat_title}}</td>
+            <td class="cat_parent_cat">{{ category.cat_parent_cat == '0' ? '-' : category.cat_parent_cat }}</td>
+            {% if isadmin > 0 %}
+            <td id="cate{{category.cat_id}}"><ion-icon size="large" class="actionIcon" name="create-outline"></td>
+                {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- CREATE MODAL -->
+<div class="reveal" id="exampleModal1" data-reveal>
+    <h1>Insert new Category.</h1>
+    <form action="" method="post">
+        <div class="grid-x">
+            <div class="cell small-4">
+                <input type="category" name="category" placeholder="New category name">
+            </div>
+            <div class="cell small-8">
+                <select name="parent" id="parent">
+                    <option value="0">No parent category</option>
+                    {% for category in categories %}    
+                    <option value={{category.cat_id}}>{{category.cat_title}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        
+        <button class="button large expanded" type="submit" name="submit">Insert</button>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </form>
+    
+    
+</div>
+
+<!-- EDIT MODAL -->
+<div class="reveal" id="exampleModal2" data-reveal>
+    <h1>Edit Category</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="grid-y">
+            <div class="cell small-12 text-center">
+                <span class="label" id="titleLabel">Category Title</span>
+                <input type="title" name="title" placeholder="Category Title" aria-describedby="titleLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="categoryLabel">Parent Category</span>
+                <select name="category" id="category">
+                    <option value="0">No parent category</option>
+                    {% for category in categories %}    
+                    <option value={{category.cat_title}}>{{category.cat_title}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <input id="edit" name="edit" type="hidden" value="edit">
+        <button class="button large expanded" type="submit" name="submit">Create</button>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </form>
+    
+    
+</div>

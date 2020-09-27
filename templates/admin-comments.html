@@ -1,0 +1,123 @@
+<div class="grid-x">
+    <div class="cell medium-9 text-center">
+        <div class="grid-x">
+            <div class="cell medium-4">
+                <h2 class="allComments active">All Comments</h2>
+            </div>
+            <div class="cell medium-4">
+                <ion-icon id="toggleButton" name="repeat-outline" size="large"></ion-icon>
+            </div>
+            <div class="cell medium-4">
+                <h2 class="draftComments">Draft Comments</h2>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="cell medium-3">
+        <button class="button large" data-open="exampleModal1">Create Post</button>
+    </div> -->
+</div>
+
+<table class="hover" id="allComments">
+    <thead>
+        <tr>
+            <th>Author</th>
+            <th>Email</th>
+            <th>Content</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Post</th>
+            {% if isadmin > 0 %}
+            <th>Actions</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for comment in comments %}
+        <tr>
+            <td class="hide com_post_id">{{ comment.com_post_id }}</td>
+            <td class="com_author">{{ comment.com_author }}</td>
+            <td class="com_email">{{ comment.com_email }}</td>
+            <td class="com_content">{{ comment.com_content }}</td>
+            <td class="com_date">{{ comment.com_date }}</td>
+            <td class="com_status">{{ comment.com_status }}</td>
+            <td class="com_post_title"><a target="_blank" rel="noopener noreferrer" href="/CMS/post.php?post_id={{ comment.com_post_id }}">{{ comment.post_title }}</a></td>
+            {% if isadmin > 0 %}
+            <td id="comment{{ comment.com_id }}"><ion-icon size="large" class="actionIcon" name="create-outline"></ion-icon></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table class="hover hide" id="draftComments">
+    <thead>
+        <tr>
+            <th>Author</th>
+            <th>Email</th>
+            <th>Content</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Post</th>
+            {% if isadmin > 0 %}
+            <th>Actions</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for draftcomment in draftcomments %}
+        <tr>
+            <td class="hide com_post_id">{{ draftcomment.com_post_id }}</td>
+            <td class="com_author">{{ draftcomment.com_author }}</td>
+            <td class="com_email">{{ draftcomment.com_email }}</td>
+            <td class="com_content">{{ draftcomment.com_content }}</td>
+            <td class="com_date">{{ draftcomment.com_date }}</td>
+            <td class="com_status">{{ draftcomment.com_status }}</td>
+            <td class="com_post_title"><a target="_blank" rel="noopener noreferrer" href="/CMS/post.php?post_id={{ draftcomment.com_post_id }}">{{ draftcomment.post_title }}</a></td>
+            {% if isadmin > 0 %}
+            <td id="comment{{ draftcomment.com_id }}"><ion-icon size="large" class="actionIcon" name="create-outline"></ion-icon></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- EDIT MODAL -->
+<div class="reveal" id="exampleModal2" data-reveal>
+    <h1>Edit Comment</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="grid-y">
+            <div class="cell small-12 text-center">
+                <span class="label" id="titleLabel">Comment Author</span>
+                <input type="author" name="author" placeholder="Comment Author" aria-describedby="authorLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="emailLabel">Comment Email</span>
+                <input type="email" name="email" placeholder="Commentors Email" aria-describedby="emailLabel">
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="contentLabel">Comment Content</span>
+                <textarea name="content" id="content" cols="10" rows="5" aria-describedby="contentLabel"></textarea>
+            </div>
+            <div class="cell small-4">
+                <span class="label" id="dateLabel">Comment date</span>
+                <input type="text" id="datepicker" name="date" placeholder="" aria-describedby="dateLabel">
+            </div>
+            <div class="cell">
+                <span class="label" id="statusLabel">Comment Status</span>
+                <select name="status" id="status">
+                    <option value="draft">draft</option>
+                    <option value="approved">approved</option>
+                    <option value="unapproved">unapproved</option>
+                </select>
+            </div>
+        </div>
+        
+        <input id="edit" name="edit" type="hidden" value="edit">
+        <button class="button large expanded" type="submit" name="submit">Edit</button>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </form>
+    
+    
+</div>
